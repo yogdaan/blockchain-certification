@@ -10,12 +10,20 @@
 
 1. We can check the deployed smart contract by running `truffle console`.
 
-1. In the console we have to first create an **app** variable with the running instance of the block chain. So for that run `Election.deployed().then(i => { newInstance = i });`.
+1. In the console we have to first create an **app** variable with the running instance of the block chain. So for that run
+    ```javascript
+    Election.deployed().then(i => { newInstance = i });
+    ```
 
-1. For converting a BigNumber to JS integer use `anyBigNumber.toNumber()`
+1. For converting a BigNumber to JS integer use
+    ```javascript
+    anyBigNumber.toNumber()
+    ```
 
 1. Assigning a value can be done using promise or then() function.
-   `app.getData('507f1f77bcf86cd799439011').then(data => tuple = data)`
+    ```javascript 
+    app.getData('507f1f77bcf86cd799439011').then(data => tuple =  data)
+    ```
 
 1. For accessing accounts you can use `web3.eth.accounts`. This will return array of accounts available.
 

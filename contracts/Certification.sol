@@ -3,7 +3,7 @@ pragma solidity ^0.4.24;
 contract Certification {
 	struct Certificate {
 		string candidate_id;
-		uint org_id;
+		uint256 org_id;
 		uint256 expiration_date;
 	}
 
@@ -21,13 +21,13 @@ contract Certification {
     }
 	}
 
-	function generateCertificate(string memory _id, string memory _candidate_id, uint _org_id, uint256 _expiration_date) public {
+	function generateCertificate(string memory _id, string memory _candidate_id, uint256 _org_id, uint256 _expiration_date) public {
 		bytes32 byte_id = stringToBytes32(_id);
 		certificates[byte_id] = Certificate(_candidate_id, _org_id, _expiration_date);
 		emit certificateGenerated(byte_id);
 	}
 
-	function getData(string memory _id) public view returns(string memory, uint, uint256) {
+	function getData(string memory _id) public view returns(string memory, uint256, uint256) {
 		bytes32 byte_id = stringToBytes32(_id);
 		Certificate memory temp = certificates[byte_id];
 		return (temp.candidate_id, temp.org_id, temp.expiration_date);
