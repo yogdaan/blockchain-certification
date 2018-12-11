@@ -1,6 +1,8 @@
 pragma solidity ^0.4.24;
 
 contract Certification {
+	constructor() public {}
+
 	struct Certificate {
 		string candidate_id;
 		uint256 org_id;

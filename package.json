@@ -4,9 +4,10 @@
   "description": "API for ethereum certification blockchain service",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "truffle test test/*"
+    "test": "truffle test test/*",
+    "deploy": "truffle migrate -f 2 --network development"
   },
-  "author": "Arvind & Pranav",
+  "author": "Saurabh Thakur",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.22.2",
@@ -25,8 +26,14 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
+    "dotenv": "^6.2.0",
     "express": "^4.16.2",
     "jquery": "^3.3.1",
-    "nodemon": "^1.14.12"
+    "nodemon": "^1.14.12",
+    "solc": "^0.4.25",
+    "truffle-hdwallet-provider": "0.0.6"
+  },
+  "_moduleAliases": {
+    "@root": "."
   }
 }

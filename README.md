@@ -40,6 +40,24 @@
     );
     ```
 
-### Testing app
+## Deploying Smart Contract
+
+The contract can be deployed in any test networks. We are using Rinkeby test network with help of truffle.
+
+1. First of all we need to have a metamask account. When we create an account in metamask a _mnemonic_ is given to us. [You can read how to get a mnemonic here.](https://support.dex.top/hc/en-us/articles/360004125614-How-to-Create-Mnemonic-Phrase-with-MetaMask-)
+
+1. After that create a project in [Infura](https://infura.io). This will help us to use rinkeby network through infura.
+
+1. You will get an endpoint like this  `https://rinkeby.infura.io/yourapikey`.
+1. Create a `.env` file in root directory and paste the previously genrated mnemonic and the endpoint URL in that. An example is also provided in [.env.example](./.env.example) file.
+
+1. Now you can deploy the smart contract using a single command: 
+    ```BASH
+    npm run deploy
+    ```
+
+1. You will get a contract address of newly generated contract. Save this for further uses.
+
+## Testing app
 
 To test the app run the command `truffle test`
