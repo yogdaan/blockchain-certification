@@ -4,8 +4,9 @@ contract Certification {
 	constructor() public {}
 
 	struct Certificate {
-		string candidate_id;
-		uint256 org_id;
+		string candidate_name;
+		string org_name;
+		string course_name;
 		uint256 expiration_date;
 	}
 
@@ -23,15 +24,15 @@ contract Certification {
     }
 	}
 
-	function generateCertificate(string memory _id, string memory _candidate_id, uint256 _org_id, uint256 _expiration_date) public {
+	function generateCertificate(string memory _id, string memory _candidate_name, string memory _org_name, string memory _course_name, uint256 _expiration_date) public {
 		bytes32 byte_id = stringToBytes32(_id);
-		certificates[byte_id] = Certificate(_candidate_id, _org_id, _expiration_date);
+		certificates[byte_id] = Certificate(_candidate_name, _org_name, _course_name, _expiration_date);
 		emit certificateGenerated(byte_id);
 	}
 
-	function getData(string memory _id) public view returns(string memory, uint256, uint256) {
+	function getData(string memory _id) public view returns(string memory, string memory, string memory, uint256) {
 		bytes32 byte_id = stringToBytes32(_id);
 		Certificate memory temp = certificates[byte_id];
-		return (temp.candidate_id, temp.org_id, temp.expiration_date);
+		return (temp.candidate_name, temp.org_name, temp.course_name, temp.expiration_date);
 	}
 }
