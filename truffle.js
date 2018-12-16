@@ -14,9 +14,9 @@ module.exports = {
       network_id: 1
     },
     development: {
-      host: "127.0.0.1",
-      port: 7545,
-      network_id: "5777"
+      host: process.env.LOCAL_ENDPOINT.split(":")[1].slice(2),
+      port: process.env.LOCAL_ENDPOINT.split(":")[2],
+      network_id: process.env.NETWORK_ID
     }
   }
 };

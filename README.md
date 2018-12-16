@@ -2,6 +2,12 @@
 
 > Built using Ethereum on local blockchain setup and deployed on Rinkeby test network.
 
+Contract deployed at | 0x4311f3ea67d18ec302e01b1256db54b1913408d8
+------------ | -------------
+RPC Network | Rinkeby Test Network
+
+ 
+
 #### Steps to run after changing a smart contract:
 
 > Always keep notice that we cannot simply assign values to variable from smart contracts because of the asynchronous nature. So we have to use promises to do that.
