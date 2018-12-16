@@ -6,7 +6,6 @@ module.exports = {
   networks: {
     rinkeby: {
       provider: function() {
-        console.log("mnemonic: " + process.env.MNEMONIC);
         return new HDWalletProvider(
           process.env.MNEMONIC,
           process.env.PROJECT_ENDPOINT

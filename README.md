@@ -50,6 +50,7 @@ The contract can be deployed in any test networks. We are using Rinkeby test net
 
 1. You will get an endpoint like this  `https://rinkeby.infura.io/yourapikey`.
 1. Create a `.env` file in root directory and paste the previously genrated mnemonic and the endpoint URL in that. An example is also provided in [.env.example](./.env.example) file.
+    > For running in development environment and to use local blockchain network, use the LOCAL_ENDPOINT variable and replace the URL with your own local URL.
 
 1. Now you can deploy the smart contract using a single command: 
     ```BASH
