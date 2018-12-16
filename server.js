@@ -13,17 +13,23 @@ app.use(bodyParser.json());
 
 // logger
 app.use((req, res, next) => {
-  const now = new Date().toString();
-  log.Logger(`${now} ${req.method} ${req.url}`);
+  const now = new Date().toString().slice(4,24);
+  log.Logger(`${now} ${req.method} ${res.statusCode} ${req.url}`);
   next();
 });
 
 app.use("/", express.static("public_static"));
 
 app.get("/getAccounts", (req, res) => {
-  truffle_connect.start(answer => {
-    res.send(answer);
-  });
+  truffle_connect
+    .start()
+    .then(answer => {
+      res.status(200).send(answer);
+    })
+    .catch(err => {
+      log.Error(`There was an error fetching your accounts.\n${err}`);
+      res.status(400).send(err);
+    });
 });
 
 app.post("/getBalance", (req, res) => {

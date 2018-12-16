@@ -26,30 +26,67 @@ module.exports = {
             self.web3.currentProvider.engine._providers[2].provider.host
         );
   },
-  start: function(callback) {
+  start: function() {
     const self = this;
-
     // Bootstrap the MetaCoin abstraction for Use.
     CertificationInstance.setProvider(self.web3.currentProvider);
-
     // Get the initial account balance so it can be displayed.
-    self.web3.eth.getAccounts((err, accs) => {
-      if (err != null) {
-        log.Error("There was an error fetching your accounts.");
-        log.Error(err);
-        return;
-      }
-
-      if (accs.length == 0) {
-        log.Warning(
-          "Couldn't get any accounts! Make sure your Ethereum client is configured correctly."
-        );
-        return;
-      }
-      self.accounts = accs;
-      self.account = self.accounts[0];
-
-      callback(self.accounts);
+    return new Promise((resolve, reject) => {
+      self.web3.eth.getAccounts((err, accs) => {
+        if (err != null) {
+          reject(err);
+        } else if (accs.length == 0) {
+          reject(
+            "Couldn't get any accounts! Make sure your Ethereum client is configured correctly."
+          );
+        } else {
+          self.accounts = accs;
+          self.account = self.accounts[0];
+          resolve(self.accounts);
+        }
+      });
     });
+  },
+  refreshBalance: function(account, callback) {
+    var self = this;
+
+    // Bootstrap the MetaCoin abstraction for Use.
+    MetaCoin.setProvider(self.web3.currentProvider);
+
+    var meta;
+    MetaCoin.deployed()
+      .then(function(instance) {
+        meta = instance;
+        return meta.getBalance.call(account, { from: account });
+      })
+      .then(function(value) {
+        callback(value.valueOf());
+      })
+      .catch(function(e) {
+        console.log(e);
+        callback("Error 404");
+      });
+  },
+  sendCoin: function(amount, sender, receiver, callback) {
+    var self = this;
+
+    // Bootstrap the MetaCoin abstraction for Use.
+    MetaCoin.setProvider(self.web3.currentProvider);
+
+    var meta;
+    MetaCoin.deployed()
+      .then(function(instance) {
+        meta = instance;
+        return meta.sendCoin(receiver, amount, { from: sender });
+      })
+      .then(function() {
+        self.refreshBalance(sender, function(answer) {
+          callback(answer);
+        });
+      })
+      .catch(function(e) {
+        console.log(e);
+        callback("ERROR 404");
+      });
   }
 };
