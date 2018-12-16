@@ -26,6 +26,7 @@ contract Certification {
 
 	function generateCertificate(string memory _id, string memory _candidate_name, string memory _org_name, string memory _course_name, uint256 _expiration_date) public {
 		bytes32 byte_id = stringToBytes32(_id);
+		require(certificates[byte_id].expiration_date == 0);
 		certificates[byte_id] = Certificate(_candidate_name, _org_name, _course_name, _expiration_date);
 		emit certificateGenerated(byte_id);
 	}
@@ -33,6 +34,7 @@ contract Certification {
 	function getData(string memory _id) public view returns(string memory, string memory, string memory, uint256) {
 		bytes32 byte_id = stringToBytes32(_id);
 		Certificate memory temp = certificates[byte_id];
+		require(temp.expiration_date != 0);
 		return (temp.candidate_name, temp.org_name, temp.course_name, temp.expiration_date);
 	}
 }
