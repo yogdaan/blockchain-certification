@@ -13,8 +13,10 @@ app.use(bodyParser.json());
 
 // logger
 app.use((req, res, next) => {
-  const now = new Date().toString().slice(4,24);
-  log.Logger(`${now} ${req.method} ${res.statusCode} ${req.url}`);
+  const now = new Date().toString().slice(4, 24);
+  res.on("finish", () => {
+    log.Logger(`${now} ${req.method} ${res.statusCode} ${req.url}`);
+  });
   next();
 });
 
@@ -22,7 +24,7 @@ app.use("/", express.static("public_static"));
 
 app.get("/getAccounts", (req, res) => {
   truffle_connect
-    .start()
+    .getAccounts()
     .then(answer => {
       res.status(200).send(answer);
     })
@@ -33,19 +35,11 @@ app.get("/getAccounts", (req, res) => {
 });
 
 app.post("/getBalance", (req, res) => {
-  log.Print("**** GET /getBalance ****");
-  log.Print(req.body);
   let currentAcount = req.body.account;
-
-  truffle_connect.refreshBalance(currentAcount, answer => {
-    let account_balance = answer;
-    truffle_connect.start(function(answer) {
-      // get list of all accounts and send it along with the response
-      let all_accounts = answer;
-      response = [account_balance, all_accounts];
-      res.send(response);
-    });
-  });
+  truffle_connect
+    .getCertificateData(currentAcount)
+    .then(data => res.send(data))
+    .catch(err => res.status(400).send({ err }));
 });
 
 app.post("/sendCoin", (req, res) => {
