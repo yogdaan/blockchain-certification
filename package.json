@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nodemon server.js",
     "test": "truffle test test/*",
-    "deploy": "truffle migrate -f 2 --network development"
+    "deploy": "truffle migrate -f 2 --network development",
+    "ganache": "ganache-cli -p 8545 &"
   },
   "author": "Saurabh Thakur",
   "license": "MIT",

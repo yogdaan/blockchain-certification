@@ -3,47 +3,26 @@
 > Built using Ethereum on local blockchain setup and deployed on Rinkeby test network.
 
 Contract deployed at | 0x4311f3ea67d18ec302e01b1256db54b1913408d8
------------- | -------------
-RPC Network | Rinkeby Test Network
+-------------------- | ------------------------------------------
+RPC Network          | Rinkeby Test Network
 
- 
+## Steps to set up local development environment
 
-#### Steps to run after changing a smart contract:
-
-> Always keep notice that we cannot simply assign values to variable from smart contracts because of the asynchronous nature. So we have to use promises to do that.
-
-1. We need to re-deploy our smart contract in the block chain so we have to migrate it with the command `truffle migrate --reset` This resets the smart contract on the blockchain.
-
-1. We can check the deployed smart contract by running `truffle console`.
-
-1. In the console we have to first create an **app** variable with the running instance of the block chain. So for that run
-    ```javascript
-    Election.deployed().then(i => { newInstance = i });
+1. We need to install CLI version of Ganache.
+    ```bash
+    npm install -g ganache-cli
     ```
+    > Ganache provides us our personal local blockchain network which we can use to develop our blockchain application. It also gives temporary test accounts with fake ethereum which we can use to run our apps. We need to start the RPC server before running our application.
 
-1. For converting a BigNumber to JS integer use
-    ```javascript
-    anyBigNumber.toNumber()
+1. To start the RPC server run the command
+    ```bash
+    npm run ganache
     ```
+    > Windows user will need to run this command in separate command prompt or terminal.
 
-1. Assigning a value can be done using promise or then() function.
-    ```javascript 
-    app.getData('507f1f77bcf86cd799439011').then(data => tuple =  data)
-    ```
-
-1. For accessing accounts you can use `web3.eth.accounts`. This will return array of accounts available.
-
-1. For calling functions that write to the blockchain we have to use the above mentioned accounts. We can call functions like this
-    ```javascript
-    newInstance.generateCertificate(
-      certificate_id,
-      candidate_id,
-      org_id,
-      expiration_date,
-      {
-        from: web3.eth.accounts[0]
-      }
-    );
+1. Now we can start the server
+    ```bash
+    npm start
     ```
 
 ## Deploying Smart Contract
@@ -56,7 +35,7 @@ The contract can be deployed in any test networks. We are using Rinkeby test net
 
 1. You will get an endpoint like this  `https://rinkeby.infura.io/yourapikey`.
 1. Create a `.env` file in root directory and paste the previously genrated mnemonic and the endpoint URL in that. An example is also provided in [.env.example](./.env.example) file.
-    > For running in development environment and to use local blockchain network, use the LOCAL_ENDPOINT variable and replace the URL with your own local URL.
+    > For running in development environment and to use local blockchain network, use the LOCAL_ENDPOINT variable and replace the URL with your own local URL (These default values are filled already and shouldn't be changed unless until RPC server running on different port)
 
 1. Now you can deploy the smart contract using a single command: 
     ```BASH
@@ -67,4 +46,17 @@ The contract can be deployed in any test networks. We are using Rinkeby test net
 
 ## Testing app
 
-To test the app run the command `truffle test`
+To test the app run the command `truffle test`. RPC server should be running to run the tests.
+
+---
+
+| Developers | |
+|-|-|
+| [Saurabh Thakur](https://github.com/thakursaurabh1998) | ![st](https://avatars0.githubusercontent.com/u/18613564?s=50) | 
+| [Madhur Gupta](https://github.com/madhurgupta10) | ![mg](https://avatars0.githubusercontent.com/u/30932899?s=50) | 
+| [Harshit Luthra](https://github.com/sachincool) | ![hl](https://avatars0.githubusercontent.com/u/25671488?s=50) | 
+
+---
+### Useful reads
+
+* [Some instructions and commands for debugging in Truffle Console](./instructions/COMMANDS.md)
