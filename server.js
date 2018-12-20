@@ -34,10 +34,10 @@ app.get("/getAccounts", (req, res) => {
     });
 });
 
-app.post("/getBalance", (req, res) => {
-  let currentAcount = req.body.account;
+app.get("/certificate/data/:id", (req, res) => {
+  let certificateId = req.params.id;
   truffle_connect
-    .getCertificateData(currentAcount)
+    .getCertificateData(certificateId)
     .then(data => res.send(data))
     .catch(err => res.status(400).send({ err }));
 });
@@ -67,3 +67,5 @@ app.listen(port, () => {
     } environment.\nServer is up on port ${port}`
   );
 });
+
+module.exports = { app };
