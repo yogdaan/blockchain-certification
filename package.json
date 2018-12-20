@@ -4,8 +4,10 @@
   "description": "API for ethereum certification blockchain service",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "truffle.cmd test test/server.test.js || truffle test",
+    "test-windows": "truffle.cmd test test/certification-web3.js && mocha test/*.test.js",
+    "test-linux": "truffle test test/certification-web3.js && mocha test/*.test.js",
     "test-server": "mocha test/*.test.js",
+    "test": "npm run test-windows || npm run test-linux",
     "local-deploy": "truffle.cmd migrate --reset || truffle migrate --reset",
     "deploy": "truffle.cmd migrate -f 2 --network rinkeby || truffle migrate -f 2 --network rinkeby",
     "ganache": "ganache-cli -p 8545 &"
