@@ -24,6 +24,12 @@
 
    > Windows user will need to run this command in separate command prompt or terminal.
 
+1. Deploy the smart contract to the local blockchain.
+
+   ```bash
+   npm run local-deploy
+   ```
+
 1. Now we can start the server
    ```bash
    npm start
