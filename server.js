@@ -42,17 +42,25 @@ app.get("/certificate/data/:id", (req, res) => {
     .catch(err => res.status(400).send({ err }));
 });
 
-app.post("/sendCoin", (req, res) => {
-  log.Print("**** GET /sendCoin ****");
-  log.Print(req.body);
+app.post("/certificate/generate", (req, res) => {
+  log.Debug(req.body);
 
-  let amount = req.body.amount;
-  let sender = req.body.sender;
-  let receiver = req.body.receiver;
+  const { candidateName, orgName, courseName, assignDate, duration } = req.body;
 
-  truffle_connect.sendCoin(amount, sender, receiver, balance => {
-    res.send(balance);
-  });
+  const id = [...Array(24)]
+    .map(i => (~~(Math.random() * 36)).toString(36))
+    .join("");
+
+  const given = new Date(assignDate);
+
+  let expirationDate = given.setFullYear(given.getFullYear() + duration);
+
+  expirationDate = expirationDate.toString();
+
+  truffle_connect
+    .generateCertificate(id, candidateName, orgName, courseName, expirationDate)
+    .then(data => res.send(data))
+    .catch(err => res.status(400).send({ err }));
 });
 
 const port = 3000 || process.env.PORT;

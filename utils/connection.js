@@ -20,7 +20,7 @@ const connectWeb3 = function() {
   }
 
   CertificationInstance.setProvider(self.web3.currentProvider);
-  //dirty hack for web3@1.0.0 support for localhost testrpc, see https://github.com/trufflesuite/truffle-contract/issues/56#issuecomment-331084530
+  // hack for web3@1.0.0 support for localhost testrpc, see https://github.com/trufflesuite/truffle-contract/issues/56#issuecomment-331084530
   if (typeof CertificationInstance.currentProvider.sendAsync !== "function") {
     CertificationInstance.currentProvider.sendAsync = function() {
       return CertificationInstance.currentProvider.send.apply(
@@ -59,7 +59,7 @@ const getAccounts = function() {
 };
 
 const getCertificateData = function(account) {
-  var self = this;
+  const self = this;
 
   // Bootstrap the CertificationInstance abstraction for Use.
   CertificationInstance.setProvider(self.web3.currentProvider);
@@ -69,26 +69,36 @@ const getCertificateData = function(account) {
     .catch(err => Promise.reject("No certificate found with the input id"));
 };
 
-const sendCoin = function(amount, sender, receiver, callback) {
-  var self = this;
+const generateCertificate = async function(
+  id,
+  candidateName,
+  orgName,
+  courseName,
+  expirationDate
+) {
+  const self = this;
 
   // Bootstrap the CertificationInstance abstraction for Use.
   CertificationInstance.setProvider(self.web3.currentProvider);
 
-  var meta;
-  CertificationInstance.deployed()
-    .then(function(instance) {
-      meta = instance;
-      return meta.sendCoin(receiver, amount, { from: sender });
-    })
-    .then(function() {
-      self.refreshBalance(sender, function(answer) {
-        callback(answer);
-      });
-    })
-    .catch(function(e) {
-      console.log(e);
-      callback("ERROR 404");
+  let accountAddress = "";
+
+  await self.getAccounts().then(answer => (accountAddress = answer[0]));
+
+  return CertificationInstance.deployed()
+    .then(instance =>
+      instance.generateCertificate(
+        id,
+        candidateName,
+        orgName,
+        courseName,
+        expirationDate,
+        { from: accountAddress, gas: 200000 }
+      )
+    )
+    .catch(err => {
+      log.Error(err);
+      return Promise.reject(err.toString());
     });
 };
 
@@ -96,5 +106,5 @@ module.exports = {
   connectWeb3,
   getAccounts,
   getCertificateData,
-  sendCoin
+  generateCertificate
 };

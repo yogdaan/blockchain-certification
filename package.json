@@ -6,7 +6,8 @@
     "start": "nodemon server.js",
     "test": "truffle.cmd test test/server.test.js || truffle test",
     "test-server": "mocha test/*.test.js",
-    "deploy": "truffle.cmd migrate -f 2 --network development || truffle migrate -f 2 --network development",
+    "local-deploy": "truffle.cmd migrate --reset || truffle migrate --reset",
+    "deploy": "truffle.cmd migrate -f 2 --network rinkeby || truffle migrate -f 2 --network rinkeby",
     "ganache": "ganache-cli -p 8545 &"
   },
   "author": "Saurabh Thakur",
