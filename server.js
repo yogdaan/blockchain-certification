@@ -38,16 +38,22 @@ app.get("/certificate/data/:id", (req, res) => {
   let certificateId = req.params.id;
   truffle_connect
     .getCertificateData(certificateId)
-    .then(data => res.send(data))
+    .then(data => {
+      const obj = {
+        candidateName: data[0],
+        orgName: data[1],
+        courseName: data[2],
+        expirationDate: parseInt(data[3])
+      };
+      res.send(obj);
+    })
     .catch(err => res.status(400).send({ err }));
 });
 
 app.post("/certificate/generate", (req, res) => {
-  log.Debug(req.body);
-
   const { candidateName, orgName, courseName, assignDate, duration } = req.body;
 
-  const id = [...Array(24)]
+  const certificateId = [...Array(24)]
     .map(i => (~~(Math.random() * 36)).toString(36))
     .join("");
 
@@ -58,8 +64,29 @@ app.post("/certificate/generate", (req, res) => {
   expirationDate = expirationDate.toString();
 
   truffle_connect
-    .generateCertificate(id, candidateName, orgName, courseName, expirationDate)
-    .then(data => res.send(data))
+    .generateCertificate(
+      certificateId,
+      candidateName,
+      orgName,
+      courseName,
+      expirationDate
+    )
+    .then(data => {
+      const { transactionHash, blockHash } = data.receipt;
+      res.status(201).send({
+        receipt: {
+          transactionHash,
+          blockHash
+        },
+        data: {
+          certificateId,
+          candidateName,
+          orgName,
+          courseName,
+          expirationDate
+        }
+      });
+    })
     .catch(err => res.status(400).send({ err }));
 });
 

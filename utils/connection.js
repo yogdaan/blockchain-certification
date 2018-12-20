@@ -40,22 +40,8 @@ const connectWeb3 = function() {
 
 const getAccounts = function() {
   const self = this;
-  // Get the initial account balance so it can be displayed.
-  return new Promise((resolve, reject) => {
-    self.web3.eth.getAccounts((err, accs) => {
-      if (err != null) {
-        reject(err);
-      } else if (accs.length == 0) {
-        reject(
-          "Couldn't get any accounts! Make sure your Ethereum client is configured correctly."
-        );
-      } else {
-        self.accounts = accs;
-        self.account = self.accounts[0];
-        resolve(self.accounts);
-      }
-    });
-  });
+
+  return self.web3.eth.getAccounts();
 };
 
 const getCertificateData = function(account) {
@@ -69,7 +55,7 @@ const getCertificateData = function(account) {
     .catch(err => Promise.reject("No certificate found with the input id"));
 };
 
-const generateCertificate = async function(
+const generateCertificate = function(
   id,
   candidateName,
   orgName,
@@ -81,25 +67,24 @@ const generateCertificate = async function(
   // Bootstrap the CertificationInstance abstraction for Use.
   CertificationInstance.setProvider(self.web3.currentProvider);
 
-  let accountAddress = "";
-
-  await self.getAccounts().then(answer => (accountAddress = answer[0]));
-
-  return CertificationInstance.deployed()
-    .then(instance =>
-      instance.generateCertificate(
-        id,
-        candidateName,
-        orgName,
-        courseName,
-        expirationDate,
-        { from: accountAddress, gas: 200000 }
+  return self.getAccounts().then(answer => {
+    let accountAddress = answer[0];
+    return CertificationInstance.deployed()
+      .then(instance =>
+        instance.generateCertificate(
+          id,
+          candidateName,
+          orgName,
+          courseName,
+          expirationDate,
+          { from: accountAddress, gas: 200000 }
+        )
       )
-    )
-    .catch(err => {
-      log.Error(err);
-      return Promise.reject(err.toString());
-    });
+      .catch(err => {
+        log.Error(err);
+        return Promise.reject(err.toString());
+      });
+  });
 };
 
 module.exports = {
