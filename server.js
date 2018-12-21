@@ -4,6 +4,7 @@ const app = express();
 const truffle_connect = require("./utils/connection");
 const bodyParser = require("body-parser");
 const log = require("./utils/log");
+const path = require("path");
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,7 +21,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", express.static("public_static"));
+app.use(express.static("client/build"));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
 
 app.get("/getAccounts", (req, res) => {
   truffle_connect
