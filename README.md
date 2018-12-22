@@ -8,6 +8,8 @@
 
 ## Steps to set up local development environment
 
+### Setting local blockchain
+
 1. We need to install CLI version of Ganache.
 
    ```bash
@@ -27,13 +29,40 @@
 1. Deploy the smart contract to the local blockchain.
 
    ```bash
-   npm run local-deploy
+   npm run contract-deploy
    ```
 
-1. Now we can start the server
+> The above 2 steps need to be run everytime you are running the project.
+
+### Setting local database
+
+> MongoDB server should be running as a background Process
+
+1. Open mongo in terminal using command `mongo`
+
+1. Then change the db using command
+
    ```bash
-   npm start
+   use certification
    ```
+
+1. Then set DB user and password with the following command
+
+   ```javascript
+   db.createUser({
+     user: "<YOUR USER NAME>",
+     pwd: "<YOUR USER PASSWORD>",
+     roles: [{ role: "dbOwner", db: "certification" }]
+   });
+   ```
+
+1. Include these username and password in the `.env` file.
+
+### Now we can start the server
+
+```bash
+npm start
+```
 
 ## Deploying Smart Contract
 

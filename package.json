@@ -8,7 +8,7 @@
     "test-linux": "truffle test test/certification-web3.js && mocha test/*.test.js",
     "test-server": "mocha test/*.test.js",
     "test": "npm run test-windows || npm run test-linux",
-    "local-deploy": "truffle.cmd migrate --reset || truffle migrate --reset",
+    "contract-deploy": "truffle.cmd migrate --reset || truffle migrate --reset",
     "deploy": "truffle.cmd migrate -f 2 --network rinkeby || truffle migrate -f 2 --network rinkeby",
     "ganache": "ganache-cli -p 8545 &"
   },
@@ -38,6 +38,7 @@
     "dotenv": "^6.2.0",
     "express": "^4.16.2",
     "jquery": "^3.3.1",
+    "mongoose": "^5.4.0",
     "nodemon": "^1.14.12",
     "solc": "^0.4.25",
     "truffle-hdwallet-provider": "0.0.6"
