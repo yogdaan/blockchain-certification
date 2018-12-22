@@ -44,14 +44,14 @@ const getAccounts = function() {
   return self.web3.eth.getAccounts();
 };
 
-const getCertificateData = function(account) {
+const getCertificateData = function(certificateId) {
   const self = this;
 
   // Bootstrap the CertificationInstance abstraction for Use.
   CertificationInstance.setProvider(self.web3.currentProvider);
 
   return CertificationInstance.deployed()
-    .then(ins => ins.getData(account))
+    .then(ins => ins.getData(certificateId))
     .catch(err => Promise.reject("No certificate found with the input id"));
 };
 

@@ -1,10 +1,12 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const truffle_connect = require("./utils/connection");
 const bodyParser = require("body-parser");
 const log = require("./utils/log");
 const path = require("path");
+
+if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = "development";
+const Certificates = require("./model/Certificates");
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,11 +23,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static("client/build"));
+if (process.env.NODE_ENV !== "development") {
+  app.use(express.static("client/build"));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-});
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 app.get("/getAccounts", (req, res) => {
   truffle_connect
@@ -41,26 +45,26 @@ app.get("/getAccounts", (req, res) => {
 
 app.get("/certificate/data/:id", (req, res) => {
   let certificateId = req.params.id;
-  truffle_connect
-    .getCertificateData(certificateId)
-    .then(data => {
-      const obj = {
-        candidateName: data[0],
-        orgName: data[1],
-        courseName: data[2],
-        expirationDate: parseInt(data[3])
-      };
+  Certificates.findById(certificateId)
+    .then(obj => {
       res.send(obj);
     })
-    .catch(err => res.status(400).send({ err }));
+    .catch(err => res.status(400).send(err));
+});
+
+app.get("/certificate/verify/:id", (req, res) => {
+  let certificateId = req.params.id;
+
+  Certificates.findById(certificateId).then(obj => {
+    obj.verifyData().then(verified => {
+      if (verified) res.status(200).send();
+      else res.status(401).send();
+    });
+  });
 });
 
 app.post("/certificate/generate", (req, res) => {
   const { candidateName, orgName, courseName, assignDate, duration } = req.body;
-
-  const certificateId = [...Array(24)]
-    .map(i => (~~(Math.random() * 36)).toString(36))
-    .join("");
 
   const given = new Date(assignDate);
 
@@ -68,39 +72,42 @@ app.post("/certificate/generate", (req, res) => {
 
   expirationDate = expirationDate.toString();
 
-  truffle_connect
-    .generateCertificate(
-      certificateId,
-      candidateName,
-      orgName,
-      courseName,
-      expirationDate
-    )
-    .then(data => {
-      const { transactionHash, blockHash } = data.receipt;
-      res.status(201).send({
-        receipt: {
-          transactionHash,
-          blockHash
-        },
-        data: {
-          certificateId,
-          candidateName,
-          orgName,
-          courseName,
-          expirationDate
-        }
-      });
+  const certificate = new Certificates({
+    candidateName,
+    orgName,
+    courseName,
+    expirationDate,
+    assignDate,
+    duration
+  });
+
+  certificate
+    .save()
+    .then(obj => {
+      const dbRes = obj.toJSON();
+      obj
+        .appendBlockchain()
+        .then(data => {
+          const { transactionHash, blockHash } = data.receipt;
+          res.status(201).send({
+            receipt: {
+              transactionHash,
+              blockHash
+            },
+            data: dbRes
+          });
+        })
+        .catch(err => res.status(500).send(err));
     })
-    .catch(err => res.status(400).send({ err }));
+    .catch(err => {
+      log.Error(err);
+      res.status(400).send();
+    });
 });
 
 const port = 3000 || process.env.PORT;
-if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = "development";
 
 app.listen(port, () => {
-  // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-  truffle_connect.connectWeb3();
   log.Info(
     `This is a ${
       process.env.NODE_ENV
