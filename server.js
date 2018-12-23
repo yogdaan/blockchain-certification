@@ -23,14 +23,6 @@ app.use((req, res, next) => {
   next();
 });
 
-if (process.env.NODE_ENV !== "development") {
-  app.use(express.static("client/build"));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
-
 app.get("/getAccounts", (req, res) => {
   truffle_connect
     .getAccounts()
@@ -55,12 +47,16 @@ app.get("/certificate/data/:id", (req, res) => {
 app.get("/certificate/verify/:id", (req, res) => {
   let certificateId = req.params.id;
 
-  Certificates.findById(certificateId).then(obj => {
-    obj.verifyData().then(verified => {
-      if (verified) res.status(200).send();
-      else res.status(401).send();
-    });
-  });
+  Certificates.findById(certificateId)
+    .then(obj => {
+      obj.verifyData().then(verified => {
+        if (verified) res.status(200).send();
+        else res.status(401).send();
+      });
+    })
+    .catch(err =>
+      res.status(400).send({ err: "No data found for the given certificateId" })
+    );
 });
 
 app.post("/certificate/generate", (req, res) => {
@@ -104,6 +100,14 @@ app.post("/certificate/generate", (req, res) => {
       res.status(400).send();
     });
 });
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 const port = 3000 || process.env.PORT;
 
