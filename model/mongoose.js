@@ -19,6 +19,6 @@ mongoose
 
 mongoose.connection.on("connected", err => log.Info("MongoDB Connected"));
 
-mongoose.connection.on("error", err => log.Info("error: " + err));
+mongoose.connection.on("error", err => log.Error("error: " + err));
 
 module.exports = { mongoose };

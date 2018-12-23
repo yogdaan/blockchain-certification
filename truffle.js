@@ -11,7 +11,7 @@ module.exports = {
           process.env.PROJECT_ENDPOINT
         );
       },
-      network_id: 1
+      network_id: 4
     },
     development: {
       host: process.env.LOCAL_ENDPOINT.split(":")[1].slice(2),

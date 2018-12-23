@@ -2,7 +2,7 @@
 
 > Built using Ethereum on local blockchain setup and deployed on Rinkeby test network.
 
-| Contract deployed at | 0x4311f3ea67d18ec302e01b1256db54b1913408d8 |
+| Contract deployed at | 0x89c34c6a0d4c7587e9120a533757f380f4676887 |
 | -------------------- | ------------------------------------------ |
 | RPC Network          | Rinkeby Test Network                       |
 

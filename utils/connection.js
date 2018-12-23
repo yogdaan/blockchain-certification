@@ -77,7 +77,7 @@ const generateCertificate = function(
           orgName,
           courseName,
           expirationDate,
-          { from: accountAddress, gas: 200000 }
+          { from: accountAddress.toLowerCase(), gas: 200000 }
         )
       )
       .catch(err => {
