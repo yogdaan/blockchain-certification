@@ -9,7 +9,9 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 const theme = createMuiTheme({
   palette: {
     primary: { main: "#2196f3" }
-    // secondary: "#f50057"
+  },
+  typography: {
+    useNextVariants: true
   }
 });
 
