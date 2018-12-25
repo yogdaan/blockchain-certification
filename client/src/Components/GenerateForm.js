@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import SubmitAnimation from "./SubmitAnimation";
+import { generateCertificate } from "../Utils/apiConnect";
 
 const styles = theme => ({
   container: {
@@ -81,10 +82,11 @@ class GenerateForm extends React.Component {
     lastname: "",
     organization: "FossAsia",
     orgLogo: "https://avatars3.githubusercontent.com/u/6295529?s=300&v=4",
-    courseName: "",
+    coursename: "",
     assignedOn: null,
     duration: 0,
-    currentState: "normal"
+    currentState: "normal",
+    emailId: ""
   };
 
   handleChange = name => event => {
@@ -94,15 +96,38 @@ class GenerateForm extends React.Component {
   };
 
   submitData = event => {
+    event.preventDefault();
     if (this.state.currentState === "validate") {
-      event.preventDefault();
       return;
     }
-    event.preventDefault();
     this.setState({ currentState: "load" });
-    setTimeout(() => {
-      this.setState({ currentState: "validate" });
-    }, 2500);
+    const {
+      firstname,
+      lastname,
+      organization,
+      coursename,
+      assignedOn,
+      duration,
+      emailId
+    } = this.state;
+    let candidateName = `${firstname} ${lastname}`;
+    let assignDate = new Date(assignedOn).getTime();
+    generateCertificate(
+      candidateName,
+      coursename,
+      organization,
+      assignDate,
+      duration,
+      emailId
+    )
+      .then(data => {
+        if (data.data !== undefined)
+          this.setState({
+            currentState: "validate",
+            certificateId: data.data.certificateId
+          });
+      })
+      .catch(err => console.log(err));
   };
 
   render() {
@@ -111,10 +136,12 @@ class GenerateForm extends React.Component {
       firstname,
       lastname,
       organization,
-      courseName,
+      coursename,
       duration,
       currentState,
-      orgLogo
+      orgLogo,
+      emailId,
+      certificateId
     } = this.state;
     return (
       <Grid container>
@@ -170,7 +197,7 @@ class GenerateForm extends React.Component {
                   helperText="Any course name or skill for which the certificate is being given."
                   placeholder="Degree, skill or award.."
                   className={(classes.courseField, classes.textField)}
-                  defaultValue={courseName}
+                  defaultValue={coursename}
                   onChange={this.handleChange("coursename")}
                   margin="normal"
                   variant="outlined"
@@ -184,6 +211,7 @@ class GenerateForm extends React.Component {
                   type="date"
                   margin="normal"
                   variant="outlined"
+                  onChange={this.handleChange("assignedOn")}
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true
@@ -208,7 +236,7 @@ class GenerateForm extends React.Component {
               <Grid item xs={12} sm={12}>
                 <TextField
                   required
-                  id="outlined-email-input"
+                  id="email"
                   label="Email"
                   className={classes.textField}
                   type="email"
@@ -216,6 +244,8 @@ class GenerateForm extends React.Component {
                   autoComplete="email"
                   margin="normal"
                   variant="outlined"
+                  value={emailId}
+                  onChange={this.handleChange("emailId")}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
@@ -223,6 +253,15 @@ class GenerateForm extends React.Component {
                   currentState={currentState}
                   className={classes.submitBtn}
                 />
+                {currentState === "validate" && (
+                  <Typography
+                    variant="caption"
+                    color="inherit"
+                    className={classes.submitBtn}
+                  >
+                    Certificate genrated with id {certificateId}
+                  </Typography>
+                )}
               </Grid>
             </form>
           </Paper>

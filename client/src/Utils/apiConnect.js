@@ -12,16 +12,26 @@ const postHeader = {
   }
 };
 
+let host = "";
+
+if (process.env.NODE_ENV !== "production") host = "http://localhost:3000";
+
 export const getCertificate = certificateId =>
-  fetch(`/certificate/data/${certificateId}`, getHeader).then(res =>
-    res.json()
-  );
+  fetch(`${host}/certificate/data/${certificateId}`, getHeader)
+    .then(res => res.json())
+    .catch(err => {
+      console.log(err);
+    });
 
 export const verifyCertificate = certificateId =>
-  fetch(`/certificate/verify/${certificateId}`, getHeader).then(res => {
-    if (res.status === 200) return true;
-    else if (res.status === 401) return false;
-  });
+  fetch(`${host}/certificate/verify/${certificateId}`, getHeader)
+    .then(res => {
+      if (res.status === 200) return true;
+      else if (res.status === 401) return false;
+    })
+    .catch(err => {
+      console.log(err);
+    });
 
 export const generateCertificate = (
   candidateName,
@@ -31,7 +41,7 @@ export const generateCertificate = (
   duration,
   emailId
 ) =>
-  fetch(`/certificate/generate`, {
+  fetch(`${host}/certificate/generate`, {
     ...postHeader,
     body: JSON.stringify({
       candidateName,
@@ -41,4 +51,8 @@ export const generateCertificate = (
       duration,
       emailId
     })
-  }).then(res => res.json());
+  })
+    .then(res => res.json())
+    .catch(err => {
+      console.log(err);
+    });

@@ -14,11 +14,11 @@ const styles = theme => ({
 });
 
 function CircularIndeterminate(props) {
-  const { classes } = props;
+  const { classes, SIZE } = props;
   return (
     <Grid item xs={12} sm={12} className={classes.progressContainer}>
       <CircularProgress
-        size={170}
+        size={SIZE}
         className={classes.progress}
         color="secondary"
       />

@@ -10,6 +10,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Tooltip from "@material-ui/core/Tooltip";
 import HelpIcon from "@material-ui/icons/Help";
 import LockIcon from "@material-ui/icons/Lock";
+import { getCertificate, verifyCertificate } from "../Utils/apiConnect";
+import Loader from "./Loader";
 
 const styles = theme => ({
   root: {
@@ -64,123 +66,156 @@ class Dashboard extends React.Component {
     verified: false,
     authorized: false,
     loading: false,
+    pageLoad: true,
     info: {
-      candidateName: "Saurabh Thakur",
-      orgName: "Udacity",
-      courseName: "Full Stack Nanodegree",
-      assignedOn: new Date().toString().slice(4, 15),
-      expiresOn: new Date().toString().slice(4, 15)
+      candidateName: "",
+      orgName: "",
+      courseName: "",
+      assignDate: null,
+      expirationDate: null
     }
   };
 
   verification = () => {
     this.setState({ loading: true });
-    setTimeout(() => {
-      this.setState({ authorized: true, verified: true, loading: false });
-    }, 2000);
+    verifyCertificate(this.state.certificateId).then(success => {
+      this.setState({ authorized: success, verified: true, loading: false });
+    })
   };
+
+  componentDidMount() {
+    const certificateId = this.props.match.params.id;
+    getCertificate(certificateId).then(data => {
+      const {
+        candidateName,
+        orgName,
+        courseName,
+        assignDate,
+        expirationDate
+      } = data;
+      this.setState(prev => {
+        const temp = prev;
+        temp.certificateId = certificateId;
+        temp.pageLoad = false;
+        temp.info = {
+          candidateName,
+          orgName,
+          courseName,
+          assignDate: new Date(assignDate).toString().slice(4, 15),
+          expirationDate: new Date(expirationDate).toString().slice(4, 15)
+        };
+        return temp;
+      });
+    });
+  }
 
   render() {
     const { classes } = this.props;
-    const { authorized, verified, loading } = this.state;
+    const { authorized, verified, loading, pageLoad } = this.state;
     const {
       candidateName,
       orgName,
       courseName,
-      assignedOn,
-      expiresOn
+      assignDate,
+      expirationDate
     } = this.state.info;
     const tooltipInfo = `This verifies whether the certification is secured and stored with correct information in the blockchain`;
     return (
       <Grid container className={classes.root}>
         <Grid item xs={12} sm={8}>
-          <Paper className={classes.paper} />
+          <Paper className={classes.paper}>
+            {pageLoad && <Loader SIZE={170} />}
+          </Paper>
         </Grid>
         <Grid item xs={12} sm={4}>
-          <Paper className={classes.rightpaper}>
-            <div>
-              <Typography variant="h5" color="inherit" noWrap>
-                {candidateName}
-              </Typography>
-              <Typography variant="h6" color="inherit" noWrap>
-                {courseName}
-              </Typography>
-              <Typography variant="h6" color="inherit" noWrap>
-                {orgName}
-              </Typography>
-              <Typography variant="caption" color="inherit" noWrap>
-                Assigned on: {assignedOn}
-              </Typography>
-              <Typography variant="caption" color="inherit" noWrap>
-                Expires on: {expiresOn}
-              </Typography>
-            </div>
-            <Grid container className={classes.verificationBox}>
-              {!verified ? (
-                <div>
-                  {!loading ? (
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center"
-                      }}
-                    >
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
+          {pageLoad ? (
+            <Loader SIZE={70} />
+          ) : (
+            <Paper className={classes.rightpaper}>
+              <div>
+                <Typography variant="h5" color="inherit" noWrap>
+                  {candidateName}
+                </Typography>
+                <Typography variant="h6" color="inherit" noWrap>
+                  {courseName}
+                </Typography>
+                <Typography variant="h6" color="inherit" noWrap>
+                  {orgName}
+                </Typography>
+                <Typography variant="caption" color="inherit" noWrap>
+                  Assigned on: {assignDate}
+                </Typography>
+                <Typography variant="caption" color="inherit" noWrap>
+                  Expires on: {expirationDate}
+                </Typography>
+              </div>
+              <Grid container className={classes.verificationBox}>
+                {!verified ? (
+                  <div>
+                    {!loading ? (
+                      <div
                         style={{
-                          width: "150px",
-                          marginRight: "10px"
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center"
                         }}
-                        onClick={this.verification}
                       >
-                        <LockIcon
-                          style={{ marginLeft: "-15px", marginRight: "5px" }}
-                          fontSize="small"
-                          className={classes.leftIcon}
-                        />
-                        Verify
-                      </Button>
-                      <Tooltip title={tooltipInfo}>
-                        <HelpIcon style={{ fontSize: "1rem" }} />
-                      </Tooltip>
-                    </div>
-                  ) : (
-                    <CircularProgress
-                      className={classes.progress}
-                      color="secondary"
-                    />
-                  )}
-                </div>
-              ) : (
-                <Grid item sm={12}>
-                  {authorized ? (
-                    <div>
-                      <VerifyBadge />
-                      <Typography
-                        variant="subtitle1"
-                        className={classes.textitems}
-                      >
-                        This certificate is Blockchain Verified
-                      </Typography>
-                    </div>
-                  ) : (
-                    <div>
-                      <FailureBadge />
-                      <Typography
-                        variant="subtitle1"
-                        className={classes.textitems}
-                      >
-                        There were some changes in the Certificate data
-                      </Typography>
-                    </div>
-                  )}
-                </Grid>
-              )}
-            </Grid>
-          </Paper>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          className={classes.button}
+                          style={{
+                            width: "150px",
+                            marginRight: "10px"
+                          }}
+                          onClick={this.verification}
+                        >
+                          <LockIcon
+                            style={{ marginLeft: "-15px", marginRight: "5px" }}
+                            fontSize="small"
+                            className={classes.leftIcon}
+                          />
+                          Verify
+                        </Button>
+                        <Tooltip title={tooltipInfo}>
+                          <HelpIcon style={{ fontSize: "1rem" }} />
+                        </Tooltip>
+                      </div>
+                    ) : (
+                      <CircularProgress
+                        className={classes.progress}
+                        color="secondary"
+                      />
+                    )}
+                  </div>
+                ) : (
+                  <Grid item sm={12}>
+                    {authorized ? (
+                      <div>
+                        <VerifyBadge />
+                        <Typography
+                          variant="subtitle1"
+                          className={classes.textitems}
+                        >
+                          This certificate is Blockchain Verified
+                        </Typography>
+                      </div>
+                    ) : (
+                      <div>
+                        <FailureBadge />
+                        <Typography
+                          variant="subtitle1"
+                          className={classes.textitems}
+                        >
+                          There were some changes in the Certificate data
+                        </Typography>
+                      </div>
+                    )}
+                  </Grid>
+                )}
+              </Grid>
+            </Paper>
+          )}
         </Grid>
       </Grid>
     );

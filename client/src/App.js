@@ -16,7 +16,7 @@ class App extends Component {
           <Route exact path="/" component={Homepage} />
           <Route path="/login" component={SignIn} />
           <Route path="/generate-certificate" component={GenerateForm} />
-          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/display/certificate/:id" component={Dashboard} />
         </Switch>
       </div>
     );
