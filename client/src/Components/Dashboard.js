@@ -9,7 +9,6 @@ import FailureBadge from "./FailureBadge";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Tooltip from "@material-ui/core/Tooltip";
 import HelpIcon from "@material-ui/icons/Help";
-import IconButton from "@material-ui/core/IconButton";
 import LockIcon from "@material-ui/icons/Lock";
 
 const styles = theme => ({
@@ -18,6 +17,7 @@ const styles = theme => ({
   },
   paper: {
     [theme.breakpoints.down("sm")]: {
+      padding: `${theme.spacing.unit * 2}px`,
       margin: theme.spacing.unit * 2
     },
     height: "75vh",
@@ -26,7 +26,7 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
+    padding: `${theme.spacing.unit * 4}px ${theme.spacing.unit * 8}px ${theme
       .spacing.unit * 3}px`
   },
   rightpaper: {
@@ -98,7 +98,7 @@ class Dashboard extends React.Component {
         </Grid>
         <Grid item xs={12} sm={4}>
           <Paper className={classes.rightpaper}>
-            <div className={classes.sep}>
+            <div>
               <Typography variant="h5" color="inherit" noWrap>
                 {candidateName}
               </Typography>
@@ -108,10 +108,10 @@ class Dashboard extends React.Component {
               <Typography variant="h6" color="inherit" noWrap>
                 {orgName}
               </Typography>
-              <Typography variant="p" color="inherit" noWrap>
+              <Typography variant="caption" color="inherit" noWrap>
                 Assigned on: {assignedOn}
               </Typography>
-              <Typography variant="p" color="inherit" noWrap>
+              <Typography variant="caption" color="inherit" noWrap>
                 Expires on: {expiresOn}
               </Typography>
             </div>
@@ -122,7 +122,7 @@ class Dashboard extends React.Component {
                     <div
                       style={{
                         display: "flex",
-                        flexDirection: "column",
+                        flexDirection: "row",
                         alignItems: "center"
                       }}
                     >
@@ -130,16 +130,21 @@ class Dashboard extends React.Component {
                         variant="contained"
                         color="primary"
                         className={classes.button}
-                        style={{ width: "150px" }}
+                        style={{
+                          width: "150px",
+                          marginRight: "10px"
+                        }}
                         onClick={this.verification}
                       >
-                        <LockIcon className={classes.leftIcon} />
+                        <LockIcon
+                          style={{ marginLeft: "-15px", marginRight: "5px" }}
+                          fontSize="small"
+                          className={classes.leftIcon}
+                        />
                         Verify
                       </Button>
                       <Tooltip title={tooltipInfo}>
-                        <IconButton aria-label="Delete">
-                          <HelpIcon />
-                        </IconButton>
+                        <HelpIcon style={{ fontSize: "1rem" }} />
                       </Tooltip>
                     </div>
                   ) : (
@@ -154,14 +159,20 @@ class Dashboard extends React.Component {
                   {authorized ? (
                     <div>
                       <VerifyBadge />
-                      <Typography variant="p" className={classes.textitems}>
+                      <Typography
+                        variant="subtitle1"
+                        className={classes.textitems}
+                      >
                         This certificate is Blockchain Verified
                       </Typography>
                     </div>
                   ) : (
                     <div>
                       <FailureBadge />
-                      <Typography variant="p" className={classes.textitems}>
+                      <Typography
+                        variant="subtitle1"
+                        className={classes.textitems}
+                      >
                         There were some changes in the Certificate data
                       </Typography>
                     </div>

@@ -125,6 +125,9 @@ class NavBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
+        <MenuItem component={Link} to="/generate-certificate">
+          Generate Certificate
+        </MenuItem>
         <MenuItem component={Link} to="/dashboard">
           Dashboard
         </MenuItem>

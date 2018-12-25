@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/animation.css";
+import "../Styles/badgeAnimation.css";
 
 function FailureBadge(props) {
   return (

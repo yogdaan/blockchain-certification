@@ -1,5 +1,6 @@
 import React from "react";
-import "../styles/submitAnimation.css";
+import PropTypes from "prop-types";
+import "../Styles/submitAnimation.css";
 
 function SubmitAnimation(props) {
   const { currentState } = props;
@@ -9,5 +10,9 @@ function SubmitAnimation(props) {
     </div>
   );
 }
+
+SubmitAnimation.propTypes = {
+  currentState: PropTypes.string.isRequired
+};
 
 export default SubmitAnimation;
