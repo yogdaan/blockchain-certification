@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const log = require("./utils/log");
 const path = require("path");
+const cors = require("cors");
 
 if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = "development";
 const Certificates = require("./model/Certificates");
@@ -22,6 +23,9 @@ app.use((req, res, next) => {
   });
   next();
 });
+
+// CORS
+if (process.env.NODE_ENV !== "production") app.use(cors());
 
 app.get("/getAccounts", (req, res) => {
   truffle_connect
