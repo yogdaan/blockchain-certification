@@ -37,9 +37,6 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
       .spacing.unit * 3}px`
   },
-  bgImage: {
-    marginTop: theme.spacing.unit * 8
-  },
   avatar: {
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.secondary.main,
@@ -56,6 +53,13 @@ const styles = theme => ({
   media: {
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
       .spacing.unit * 3}px`
+  },
+  imgstyles: {
+    maxWidth: "70vw",
+    maxHeight: "90vh",
+    [theme.breakpoints.down(1200)]: {
+      marginTop: theme.spacing.unit * 4
+    }
   }
 });
 
@@ -66,11 +70,7 @@ class SignIn extends Component {
       <div>
         <Grid container style={{ height: "100%" }}>
           <Grid className={classes.hidden} item sm={false} md={8}>
-            <img
-              style={{ maxWidth: "70vw", maxHeight: "90vh" }}
-              src={ChainImage}
-              alt="chain"
-            />
+            <img className={classes.imgstyles} src={ChainImage} alt="chain" />
           </Grid>
           <Grid item sm={12} md={4}>
             <Paper className={classes.paper}>

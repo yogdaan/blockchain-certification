@@ -4,6 +4,7 @@ import SignIn from "./Components/SignIn";
 import { Switch, Route } from "react-router-dom";
 import NavBar from "./Components/NavBar";
 import Homepage from "./Components/Homepage";
+import Dashboard from "./Components/Dashboard";
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/login" component={SignIn} />
+          <Route path="/dashboard" component={Dashboard} />
         </Switch>
       </div>
     );
