@@ -12,6 +12,7 @@ import HelpIcon from "@material-ui/icons/Help";
 import LockIcon from "@material-ui/icons/Lock";
 import { getCertificate, verifyCertificate } from "../Utils/apiConnect";
 import Loader from "./Loader";
+import Certificate from "./Certificate";
 
 const styles = theme => ({
   root: {
@@ -22,7 +23,7 @@ const styles = theme => ({
       padding: `${theme.spacing.unit * 2}px`,
       margin: theme.spacing.unit * 2
     },
-    height: "75vh",
+    minHeight: "75vh",
     maxWidth: "95%",
     margin: theme.spacing.unit * 5,
     display: "flex",
@@ -73,14 +74,16 @@ class Dashboard extends React.Component {
       courseName: "",
       assignDate: null,
       expirationDate: null
-    }
+    },
+    logo:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/FOSSASIA_Logo.svg/600px-FOSSASIA_Logo.svg.png"
   };
 
   verification = () => {
     this.setState({ loading: true });
     verifyCertificate(this.state.certificateId).then(success => {
       this.setState({ authorized: success, verified: true, loading: false });
-    })
+    });
   };
 
   componentDidMount() {
@@ -111,7 +114,14 @@ class Dashboard extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { authorized, verified, loading, pageLoad } = this.state;
+    const {
+      authorized,
+      verified,
+      loading,
+      pageLoad,
+      certificateId,
+      logo
+    } = this.state;
     const {
       candidateName,
       orgName,
@@ -124,7 +134,17 @@ class Dashboard extends React.Component {
       <Grid container className={classes.root}>
         <Grid item xs={12} sm={8}>
           <Paper className={classes.paper}>
-            {pageLoad && <Loader SIZE={170} />}
+            {pageLoad ? (
+              <Loader SIZE={170} />
+            ) : (
+              <Certificate
+                name={candidateName}
+                title={courseName}
+                date={assignDate}
+                hash={certificateId}
+                logo={logo}
+              />
+            )}
           </Paper>
         </Grid>
         <Grid item xs={12} sm={4}>

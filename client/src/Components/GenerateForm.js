@@ -81,7 +81,7 @@ class GenerateForm extends React.Component {
     firstname: "",
     lastname: "",
     organization: "FossAsia",
-    orgLogo: "https://avatars3.githubusercontent.com/u/6295529?s=300&v=4",
+    orgLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/FOSSASIA_Logo.svg/600px-FOSSASIA_Logo.svg.png",
     coursename: "",
     assignedOn: null,
     duration: 0,
