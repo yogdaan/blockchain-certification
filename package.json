@@ -10,7 +10,8 @@
     "test": "npm run test-windows || npm run test-linux",
     "contract-deploy": "truffle.cmd migrate --reset || truffle migrate --reset",
     "deploy": "truffle.cmd migrate -f 2 --network rinkeby || truffle migrate -f 2 --network rinkeby",
-    "ganache": "ganache-cli -p 8545 &"
+    "ganache": "ganache-cli -p 8545 &",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
   "author": "Saurabh Thakur",
   "license": "MIT",
