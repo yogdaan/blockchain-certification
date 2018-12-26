@@ -117,7 +117,7 @@ class GenerateForm extends React.Component {
       coursename,
       organization,
       assignDate,
-      duration,
+      parseInt(duration),
       emailId
     )
       .then(data => {
