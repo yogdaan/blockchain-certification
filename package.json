@@ -22,23 +22,20 @@
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^9.0.0",
-    "babel-loader": "^8.0.4",
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-preset-env": "^1.1.8",
     "babel-preset-es2015": "^6.22.0",
     "babel-register": "^6.22.0",
-    "css-loader": "^0.26.1",
-    "expect": "^23.6.0",
-    "json-loader": "^0.5.4",
-    "mocha": "^5.2.0",
-    "style-loader": "^0.13.1",
-    "supertest": "^3.3.0",
-    "truffle-contract": "^1.1.11",
     "cors": "^2.8.5",
-    "web3": "^1.0.0-beta.37"
+    "expect": "^23.6.0",
+    "mocha": "^5.2.0",
+    "json-loader": "^0.5.4",
+    "supertest": "^3.3.0"
   },
   "dependencies": {
+    "babel-loader": "^8.0.4",
     "body-parser": "^1.18.2",
+    "css-loader": "^0.26.1",
     "chalk": "^2.4.1",
     "dotenv": "^6.2.0",
     "express": "^4.16.2",
@@ -46,7 +43,10 @@
     "mongoose": "^5.4.0",
     "nodemon": "^1.14.12",
     "solc": "^0.4.25",
-    "truffle-hdwallet-provider": "0.0.6"
+    "style-loader": "^0.13.1",
+    "truffle-contract": "^1.1.11",
+    "truffle-hdwallet-provider": "0.0.6",
+    "web3": "^1.0.0-beta.37"
   },
   "_moduleAliases": {
     "@root": "."

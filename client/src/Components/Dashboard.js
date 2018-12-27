@@ -212,7 +212,7 @@ class Dashboard extends React.Component {
                   <Grid item sm={12}>
                     {authorized ? (
                       <div>
-                        {/* <VerifyBadge /> */}
+                        <VerifyBadge />
                         <Typography
                           variant="subtitle1"
                           className={classes.textitems}
