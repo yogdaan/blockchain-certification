@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "../Styles/certstyles.css";
 
 function Certificate(props) {
   const { title, name, date, hash, logo } = props;

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "../Styles/submitAnimation.css";
+// import "../Styles/submitAnimation.css";
 
 function SubmitAnimation(props) {
   const { currentState } = props;

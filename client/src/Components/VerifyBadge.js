@@ -1,5 +1,5 @@
 import React from "react";
-import "../Styles/badgeAnimation.css";
+// import "../Styles/badgeAnimation.css";
 
 function VerifyBadge(props) {
   return (

@@ -1,6 +1,9 @@
 {
   "name": "certification-server",
   "version": "0.0.2",
+  "engines": {
+    "node": ">=8.11.2"
+  },
   "description": "API for ethereum certification blockchain service",
   "scripts": {
     "start": "nodemon server.js",
