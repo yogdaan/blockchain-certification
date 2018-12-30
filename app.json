@@ -1,0 +1,6 @@
+{
+	"name": "Certification Validation",
+	"description": "A blockchain verified certification service",
+	"repository": "https://github.com/thakursaurabh1998/certification-validation",
+  "keywords": ["node", "express", "react", "ethereum"]
+}

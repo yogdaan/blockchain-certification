@@ -1,5 +1,11 @@
 # Certificate Generation and Validation Using Blockchain
 
+[![Docker Build](https://img.shields.io/docker/automated/thakursaurabh1998/certification-validation.svg?style=for-the-badge)](https://hub.docker.com/r/thakursaurabh1998/certification)
+[![Docker Build Status](https://img.shields.io/docker/build/thakursaurabh1998/certification-validation.svg?style=for-the-badge)](https://hub.docker.com/r/thakursaurabh1998/certification-validation)
+[![](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=for-the-badge)](https://gitter.im/certification-validation/)
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 > Built using Ethereum on local blockchain setup and deployed on Rinkeby test network.
 
 | Contract deployed at | 0x89c34c6a0d4c7587e9120a533757f380f4676887 |
@@ -68,7 +74,7 @@ npm start
 
 The contract can be deployed in any test networks. We are using Rinkeby test network with help of truffle.
 
-1. First of all we need to have a metamask account. When we create an account in metamask a _mnemonic_ is given to us. [You can read how to get a mnemonic here.](https://support.dex.top/hc/en-us/articles/360004125614-How-to-Create-Mnemonic-Phrase-with-MetaMask-)
+1. First of all we need to have a metamask account. When we create an account in metamask a _mnemonic_ is given t+o us. [You can read how to get a mnemonic here.](https://support.dex.top/hc/en-us/articles/360004125614-How-to-Create-Mnemonic-Phrase-with-MetaMask-)
 
 1. After that create a project in [Infura](https://infura.io). This will help us to use rinkeby network through infura.
 
