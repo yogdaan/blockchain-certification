@@ -11,18 +11,6 @@ const obj = {
   duration: 2
 };
 
-describe("GET /getAccounts", () => {
-  it("should get all accounts", done => {
-    request(app)
-      .get("/getAccounts")
-      .expect(200)
-      .expect(res => {
-        expect(res.body.length).toBe(10);
-      })
-      .end(done);
-  });
-});
-
 describe("POST /certificate/generate", () => {
   it("should save the data in the blockchain", done => {
     request(app)
@@ -43,7 +31,7 @@ describe("POST /certificate/generate", () => {
         expect(orgName).toEqual(obj.orgName);
         const tempDate = new Date(obj.assignDate);
         tempDate.setFullYear(tempDate.getFullYear() + obj.duration);
-        expect(expirationDate).toEqual(tempDate.getTime().toString());
+        expect(expirationDate).toEqual(tempDate.getTime());
       })
       .end(done);
   });
@@ -87,6 +75,30 @@ describe("GET /certificate/data/:id", () => {
             expect(expirationDate).toEqual(tempDate.getTime().toString());
           });
       })
+      .end(done);
+  });
+});
+
+describe("GET /certificate/verify/data/:id", () => {
+  it("should return 200 status code if certificate is verified", done => {
+    let certificateId = "";
+    request(app)
+      .post("/certificate/generate")
+      .send(obj)
+      .expect(res => {
+        certificateId = res.body.data.certificateId;
+        request(app)
+          .get(`/certificate/verify/${certificateId}`)
+          .expect(200);
+      })
+      .end(done);
+  });
+
+  it("should return 400 status code for incorrect or invalid certificate id", done => {
+    let certificateId = "abcabc123123";
+    request(app)
+      .get(`/certificate/verify/${certificateId}`)
+      .expect(400)
       .end(done);
   });
 });

@@ -26,25 +26,15 @@ app.use((req, res, next) => {
 // CORS
 if (process.env.NODE_ENV !== "production") app.use(require("cors")());
 
-app.get("/getAccounts", (req, res) => {
-  truffle_connect
-    .getAccounts()
-    .then(answer => {
-      res.status(200).send(answer);
-    })
-    .catch(err => {
-      log.Error(`There was an error fetching your accounts.\n${err}`);
-      res.status(400).send(err);
-    });
-});
-
 app.get("/certificate/data/:id", (req, res) => {
   let certificateId = req.params.id;
   Certificates.findById(certificateId)
     .then(obj => {
-      res.send(obj);
+      if (obj === null)
+        res.status(400).send({ err: "Certificate data doesn't exist" });
+      else res.send(obj);
     })
-    .catch(err => res.status(400).send(err));
+    .catch(err => res.status(400).send({ err }));
 });
 
 app.get("/certificate/verify/:id", (req, res) => {
