@@ -99,5 +99,3 @@ To test the app run the command `truffle test`. RPC server should be running to 
 | Developers                                             |                                                               |
 | ------------------------------------------------------ | ------------------------------------------------------------- |
 | [Saurabh Thakur](https://github.com/thakursaurabh1998) | ![st](https://avatars0.githubusercontent.com/u/18613564?s=50) |
-| [Madhur Gupta](https://github.com/madhurgupta10)       | ![mg](https://avatars0.githubusercontent.com/u/30932899?s=50) |
-| [Harshit Luthra](https://github.com/sachincool)        | ![hl](https://avatars0.githubusercontent.com/u/25671488?s=50) |
