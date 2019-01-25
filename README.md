@@ -1,5 +1,7 @@
 # Certificate Generation and Validation Using Blockchain
 
+[![Join the chat at https://gitter.im/yogdaan/blockchain-certification](https://badges.gitter.im/yogdaan/blockchain-certification.svg)](https://gitter.im/yogdaan/blockchain-certification?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > Built using Ethereum on local blockchain setup and deployed on Rinkeby test network.
 
 | Contract deployed at | 0x89c34c6a0d4c7587e9120a533757f380f4676887 |
