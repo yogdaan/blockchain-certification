@@ -1,9 +1,8 @@
 # Certificate Generation and Validation Using Blockchain
 
-[![Docker Build](https://img.shields.io/docker/automated/thakursaurabh1998/certification-validation.svg?style=for-the-badge)](https://hub.docker.com/r/thakursaurabh1998/certification)
-[![Docker Build Status](https://img.shields.io/docker/build/thakursaurabh1998/certification-validation.svg?style=for-the-badge)](https://hub.docker.com/r/thakursaurabh1998/certification-validation)
-[![](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=for-the-badge)](https://gitter.im/certification-validation/)
-
+[![Docker Build](https://img.shields.io/docker/automated/thakursaurabh1998/blockchain-certification.svg?style=for-the-badge)](https://hub.docker.com/r/thakursaurabh1998/blockchain-certification)
+[![Docker Build Status](https://img.shields.io/docker/build/thakursaurabh1998/blockchain-certification.svg?style=for-the-badge)](https://hub.docker.com/r/thakursaurabh1998/blockchain-certification)
+[![Join the chat at https://gitter.im/yogdaan/blockchain-certification](https://img.shields.io/gitter/room/certification-validation/community.js.svg?style=for-the-badge)](https://gitter.im/yogdaan/blockchain-certification)  
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 > Built using Ethereum on local blockchain setup and deployed on Rinkeby test network.
@@ -105,5 +104,3 @@ To test the app run the command `truffle test`. RPC server should be running to 
 | Developers                                             |                                                               |
 | ------------------------------------------------------ | ------------------------------------------------------------- |
 | [Saurabh Thakur](https://github.com/thakursaurabh1998) | ![st](https://avatars0.githubusercontent.com/u/18613564?s=50) |
-| [Madhur Gupta](https://github.com/madhurgupta10)       | ![mg](https://avatars0.githubusercontent.com/u/30932899?s=50) |
-| [Harshit Luthra](https://github.com/sachincool)        | ![hl](https://avatars0.githubusercontent.com/u/25671488?s=50) |
