@@ -99,6 +99,10 @@ To test the app run the command `truffle test`. RPC server should be running to 
 
 - [Some instructions and commands for debugging in Truffle Console](./instructions/COMMANDS.md)
 
+## Youtube Video for better understanding of the project
+
+[![youtube-picture](https://img.youtube.com/vi/pByqlMCx7Bk/maxresdefault.jpg)](https://www.youtube.com/watch?v=pByqlMCx7Bk)
+
 ---
 
 | Developers                                             |                                                               |
