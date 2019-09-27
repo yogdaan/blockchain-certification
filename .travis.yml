@@ -1,0 +1,16 @@
+services:
+- docker
+
+script:
+# build new image
+- docker build --rm=true -t yogdaan/blockchain-certification:latest
+
+jobs:
+  include:
+  # push image to dockerhub
+  - stage: build-push
+    if: branch = master AND type != pull_request
+    script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - docker build --rm=true -t yogdaan/blockchain-certification:latest .
+    - docker push yogdaan/blockchain-certification:latest
