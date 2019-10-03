@@ -1,7 +1,6 @@
 # Certificate Generation and Validation Using Blockchain
 
-[![Docker Build](https://img.shields.io/docker/automated/thakursaurabh1998/blockchain-certification.svg?style=for-the-badge)](https://hub.docker.com/r/thakursaurabh1998/blockchain-certification)
-[![Docker Build Status](https://img.shields.io/docker/build/thakursaurabh1998/blockchain-certification.svg?style=for-the-badge)](https://hub.docker.com/r/thakursaurabh1998/blockchain-certification)
+[![Docker Build](https://img.shields.io/docker/automated/thakursaurabh1998/blockchain-certification.svg?style=for-the-badge)](https://hub.docker.com/r/yogdaan/blockchain-certification)
 [![Join the chat at https://gitter.im/yogdaan/blockchain-certification](https://img.shields.io/gitter/room/certification-validation/community.js.svg?style=for-the-badge)](https://gitter.im/yogdaan/blockchain-certification)  
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
